@@ -16,3 +16,12 @@ const con = mongoose.connection;
 con.on('open', () => {
     console.log('connected...');
 });
+
+app.use(express.json());
+
+const alienRouter = require('./routers/aliens');
+app.use('/aliens', alienRouter);
+
+app.listen(3000, () => {
+    console.log('Server started');
+});
