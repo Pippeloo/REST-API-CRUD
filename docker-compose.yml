@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  rest-api:
+    build:
+      context: .
+      target: production
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017
+      - MONGO_DB=rest-api
+    depends_on:
+      - mongo
+    networks:
+      - default
+  
+  mongo:
+    image: mongo:4.2.8
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    networks:
+      - default
+    
+  mongo-express:
+    image: mongo-express:0.54.0
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
+      - ME_CONFIG_MONGODB_SERVER=mongo
+    depends_on:
+      - mongo
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
