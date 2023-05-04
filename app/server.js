@@ -22,6 +22,9 @@ app.use(express.json());
 const alienRouter = require('./routers/aliens');
 app.use('/aliens', alienRouter);
 
+const loginRouter = require('./routers/login');
+app.use('/login', loginRouter);
+
 app.listen(3000, () => {
     console.log('Server started');
 });
